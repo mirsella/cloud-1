@@ -1,6 +1,6 @@
-# DONE: install docker https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
-# TODO: copy file https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
-# TODO: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
+# NOTE: install docker https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
+# NOTE: copy file https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+# NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
 
 - name: Setup and start inception
   hosts: all
@@ -50,3 +50,10 @@
       ansible.builtin.copy:
         src: ./inception
         dest: inception
+
+    - name: Start the docker-compose
+      community.docker.docker_compose_v2:
+        project_src: ./inception
+        # NOTE: shouldn't be necessary, need testing
+        # files:
+        #   - docker-compose.yml
