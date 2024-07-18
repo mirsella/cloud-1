@@ -31,6 +31,16 @@
         state: absent
         purge: yes
 
+    - name: Remove Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: absent
+
+    - name: Remove Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: absent
+
     - name: Delete Inception directory
       ansible.builtin.file:
         path: ./inception

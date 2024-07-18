@@ -50,7 +50,7 @@
         dest: inception
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
-    - name: Start the docker-compose
+    - name: Start docker-compose
       community.docker.docker_compose_v2:
         project_src: ./inception
         # NOTE: shouldn't be necessary, need testing
