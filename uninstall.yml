@@ -1,4 +1,37 @@
-# NOTE: this playbook should be written after the main to know what to uninstall
-# TODO: docker stop all and system prune
-# TODO: uninstall docker
-# TODO: remove files and data
+- name: Teardown and clean up inception
+  hosts: all
+  tasks:
+    - name: Stop docker-compose services
+      community.docker.docker_compose_v2:
+        project_src: ./inception
+        state: absent
+
+    - name: Docker prune everything
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        images_filters:
+          dangling: false
+        networks: true
+        volumes: true
+        builder_cache: true
+
+    - name: Stop Docker service
+      service:
+        name: docker
+        state: stopped
+
+    - name: Remove Docker packages
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+        state: absent
+        purge: yes
+
+    - name: Delete Inception directory
+      ansible.builtin.file:
+        path: ./inception
+        state: absent
