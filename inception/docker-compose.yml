@@ -1,0 +1,68 @@
+version: "3.8"
+
+# TODO: add phpmyadmin
+
+services:
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    depends_on:
+      - wordpress
+    ports:
+      - 443:443
+    volumes:
+      - data_wordpress:/var/www/html
+    restart: always
+    networks:
+      - inception-network
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./requirements/mariadb
+      args:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - data_mariadb:/var/lib/mysql
+    networks:
+      - inception-network
+    restart: always
+    env_file:
+      - .env
+
+  wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    build:
+      context: ./requirements/wordpress
+      args:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - data_wordpress:/var/www/html
+    networks:
+      - inception-network
+
+volumes:
+  data_mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: "${HOME}/data/mysql"
+      o: bind
+  data_wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: "${HOME}/data/wordpress"
+      o: bind
+
+networks:
+  inception-network:
+    driver: bridge
