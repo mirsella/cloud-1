@@ -12,3 +12,13 @@ TODOs:
 - site.yml todos started, not tested yet (waiting for school provided server)
 - uninstall.yml todos
 - add phpmyadmin to the `srcs/docker-compose.yml`
+
+_subject requirements_:
+
+- auto restart if server rebooted
+- data should be here on serve restart (should be already good)
+- > It is possible to deploy your site on several servers in parallel.
+
+  what does this mean?
+
+- Your server should be able, when possible, to use TLS.
