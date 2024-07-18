@@ -1,0 +1,4 @@
+# NOTE: this playbook should be written after the main to know what to uninstall
+# TODO: docker stop all and system prune
+# TODO: uninstall docker
+# TODO: remove files and data
