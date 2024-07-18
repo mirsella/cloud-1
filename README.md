@@ -9,6 +9,6 @@ to uninstall:
 
 TODOs:
 
-- site.yml todos
+- site.yml todos started, not tested yet (waiting for school provided server)
 - uninstall.yml todos
 - add phpmyadmin to the `srcs/docker-compose.yml`
