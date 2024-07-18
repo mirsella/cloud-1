@@ -15,10 +15,10 @@ TODOs:
 
 _subject requirements_:
 
-- auto restart if server rebooted
-- data should be here on serve restart (should be already good)
+- container restarted if server rebooted (should already work)
+- data should be here on server restart (should already work)
 - > It is possible to deploy your site on several servers in parallel.
 
-  what does this mean?
+  what does this mean ? just having `hosts: all` in the playbook ?
 
-- Your server should be able, when possible, to use TLS.
+- > Your server should be able, when possible, to use TLS.
