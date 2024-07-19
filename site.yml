@@ -11,10 +11,6 @@
           - ca-certificates
           - curl
           - software-properties-common
-          # NOTE: probably useless (was incuded in digitalocean's guide)
-          # - python3-pip
-          # - virtualenv
-          # - python3-setuptools
         state: latest
         update_cache: true
 
@@ -37,17 +33,22 @@
         state: latest
         update_cache: true
 
-    # NOTE: included in the digitalocean guide, but we'll probably wont need the python module
-    # - name: Install Docker Module for Python
-    #   pip:
-    #     name: docker
-
     - name: Ensure Docker service is running
       become: true
       service:
         name: docker
         state: started
         enabled: yes
+
+    - name: Add current user to Docker group
+      become: true
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
+
+    - name: Reset ssh connection for the new group to take effect
+      ansible.builtin.meta: reset_connection
 
     # NOTE: copy file https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
     - name: Copy Inception directory
@@ -57,6 +58,8 @@
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose
+      # NOTE: to access the docker unix socket
+      # become: true
       community.docker.docker_compose_v2:
         project_src: ./inception
         # NOTE: shouldn't be necessary, need testing
