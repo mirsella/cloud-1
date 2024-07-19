@@ -48,5 +48,10 @@
 
     - name: Delete Inception directory
       ansible.builtin.file:
-        path: ./inception
+        path: inception
+        state: absent
+
+    - name: Delete data directory
+      ansible.builtin.file:
+        path: data
         state: absent
