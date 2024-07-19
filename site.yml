@@ -2,7 +2,6 @@
   hosts: all
 
   tasks:
-    # NOTE: install docker https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
     - name: Install required system packages
       become: true
       apt:
@@ -50,18 +49,17 @@
     - name: Reset ssh connection for the new group to take effect
       ansible.builtin.meta: reset_connection
 
-    # NOTE: copy file https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
     - name: Copy Inception directory
       ansible.builtin.copy:
-        src: ./inception
+        src: inception
         dest: .
+
+    - name: Copy .env file
+      ansible.builtin.copy:
+        src: .env
+        dest: inception
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose
-      # NOTE: to access the docker unix socket
-      # become: true
       community.docker.docker_compose_v2:
         project_src: ./inception
-        # NOTE: shouldn't be necessary, need testing
-        # files:
-        #   - docker-compose.yml
