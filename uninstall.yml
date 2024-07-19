@@ -1,5 +1,6 @@
 - name: Teardown and clean up inception
   hosts: all
+
   tasks:
     - name: Stop docker-compose services
       community.docker.docker_compose_v2:
@@ -17,11 +18,13 @@
         builder_cache: true
 
     - name: Stop Docker service
+      become: true
       service:
         name: docker
         state: stopped
 
     - name: Remove Docker packages
+      become: true
       apt:
         pkg:
           - docker-ce
@@ -32,11 +35,13 @@
         purge: yes
 
     - name: Remove Docker GPG apt Key
+      become: true
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: absent
 
     - name: Remove Docker Repository
+      become: true
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: absent

@@ -1,8 +1,10 @@
 - name: Setup and start inception
   hosts: all
+
   tasks:
     # NOTE: install docker https://www.digitalocean.com/community/tutorials/how-to-use-ansible-to-install-and-set-up-docker-on-ubuntu-20-04
     - name: Install required system packages
+      become: true
       apt:
         pkg:
           - apt-transport-https
@@ -17,16 +19,19 @@
         update_cache: true
 
     - name: Add Docker GPG apt Key
+      become: true
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
     - name: Add Docker Repository
+      become: true
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
 
     - name: Update apt and install docker-ce
+      become: true
       apt:
         name: docker-ce
         state: latest
@@ -38,6 +43,7 @@
     #     name: docker
 
     - name: Ensure Docker service is running
+      become: true
       service:
         name: docker
         state: started
@@ -47,7 +53,7 @@
     - name: Copy Inception directory
       ansible.builtin.copy:
         src: ./inception
-        dest: inception
+        dest: .
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose
