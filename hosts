@@ -2,4 +2,4 @@
 xxxxx
 
 [vagrant]
-localhost ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=/home/mirsella/dev/cloud-1/.vagrant/machines/default/virtualbox/private_key
+localhost ansible_ssh_port=2222 ansible_ssh_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
