@@ -66,6 +66,7 @@
       with_items:
         - "{{ ansible_env.HOME }}/data/wordpress"
         - "{{ ansible_env.HOME }}/data/mariadb"
+        - "{{ ansible_env.HOME }}/data/phpmyadmin"
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose

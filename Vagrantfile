@@ -1,8 +1,4 @@
 Vagrant.configure("2") do |config|
-  config.vm.provider :libvirt do |libvirt|
-    libvirt.driver = "kvm"
-  end
-
   config.vm.box = "ubuntu/focal64"
 
   # for ansible

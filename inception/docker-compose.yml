@@ -6,11 +6,13 @@ services:
     build: ./requirements/nginx
     depends_on:
       - wordpress
+      - phpmyadmin
     ports:
       - 8443:443
       - 443:443
     volumes:
       - data_wordpress:/var/www/html
+      - data_phpmyadmin:/var/www/html
     restart: always
     networks:
       - inception-network
@@ -46,6 +48,21 @@ services:
       - data_wordpress:/var/www/html
     networks:
       - inception-network
+    
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8081:443"
+    volumes:
+      - data_phpmyadmin:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      - inception-network
 
 volumes:
   data_mariadb:
@@ -59,6 +76,12 @@ volumes:
     driver_opts:
       type: none
       device: "${HOME}/data/wordpress"
+      o: bind
+  data_phpmyadmin:
+    driver: local
+    driver_opts:
+      type: none
+      device: "${HOME}/data/phpmyadmin"
       o: bind
 
 networks:
