@@ -1,6 +1,6 @@
 FROM debian:buster
 
-ARG WORDPRESS_VERSION=6.2
+ARG WORDPRESS_VERSION=6.6
 
 RUN apt-get update && \
   apt-get install -y wget mariadb-client php7.3-fpm php7.3-redis redis php7.3-mysql php7.3-mbstring php7.3-gd php7.3-curl php7.3-zip && \
