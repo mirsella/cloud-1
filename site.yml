@@ -63,13 +63,14 @@
       file:
         path: "{{ item }}"
         state: directory
-        mode: "0755"
       with_items:
         - "{{ ansible_env.HOME }}/data/wordpress"
         - "{{ ansible_env.HOME }}/data/mariadb"
 
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose
+      environment:
+        WORDPRESS_URL: "{{ inventory_hostname }}"
       community.docker.docker_compose_v2:
         project_src: ./inception
         build: "always"

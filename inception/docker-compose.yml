@@ -40,6 +40,8 @@ services:
     restart: always
     env_file:
       - .env
+    environment:
+      WORDPRESS_URL: ${WORDPRESS_URL}
     volumes:
       - data_wordpress:/var/www/html
     networks:
