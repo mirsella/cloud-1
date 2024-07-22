@@ -6,6 +6,9 @@
       community.docker.docker_compose_v2:
         project_src: ./inception
         state: absent
+        remove_orphans: true
+        remove_volumes: true
+        remove_images: all
 
     - name: Docker prune everything
       community.docker.docker_prune:

@@ -1,5 +1,3 @@
-# TODO: add phpmyadmin
-
 services:
   nginx:
     container_name: nginx
@@ -12,7 +10,6 @@ services:
       - 443:443
     volumes:
       - data_wordpress:/var/www/html
-      - data_phpmyadmin:/var/www/html/phpmyadmin
     restart: always
     networks:
       - inception-network
@@ -43,28 +40,22 @@ services:
     env_file:
       - .env
     environment:
-      WORDPRESS_URL: ${WORDPRESS_URL}
+      HOSTNAME: ${HOSTNAME}
     volumes:
       - data_wordpress:/var/www/html
     networks:
       - inception-network
-    
+
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:5.2.1
     container_name: phpmyadmin
     environment:
       PMA_HOST: mariadb
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - data_phpmyadmin:/var/www/html
+      PMA_ABSOLUTE_URI: https://${HOSTNAME}/phpmyadmin/
     depends_on:
       - mariadb
     networks:
       - inception-network
-    links:
-      - mariadb
 
 volumes:
   data_mariadb:
@@ -78,12 +69,6 @@ volumes:
     driver_opts:
       type: none
       device: "${HOME}/data/wordpress"
-      o: bind
-  data_phpmyadmin:
-    driver: local
-    driver_opts:
-      type: none
-      device: "${HOME}/data/phpmyadmin"
       o: bind
 
 networks:

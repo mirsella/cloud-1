@@ -10,6 +10,7 @@
           - ca-certificates
           - curl
           - software-properties-common
+          - neovim
         state: latest
         update_cache: true
 
@@ -71,7 +72,7 @@
     # NOTE: community.docker.docker_compose_v2 https://docs.ansible.com/ansible/latest/collections/community/docker/docker_compose_v2_module.html
     - name: Start docker-compose
       environment:
-        WORDPRESS_URL: "{{ inventory_hostname }}"
+        HOSTNAME: "{{ inventory_hostname }}"
       community.docker.docker_compose_v2:
         project_src: ./inception
         build: "always"

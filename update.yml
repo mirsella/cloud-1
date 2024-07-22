@@ -7,6 +7,7 @@
         project_src: ./inception
         state: absent
         remove_volumes: true
+        remove_orphans: true
 
     - name: Delete data directory
       become: true
@@ -35,8 +36,8 @@
 
     - name: start docker compose
       environment:
-        WORDPRESS_URL: "{{ inventory_hostname }}"
+        HOSTNAME: "{{ inventory_hostname }}"
       community.docker.docker_compose_v2:
         project_src: ./inception
-        build: "always"
-        recreate: "always"
+        build: always
+        recreate: always
