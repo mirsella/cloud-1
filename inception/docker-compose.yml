@@ -12,7 +12,7 @@ services:
       - 443:443
     volumes:
       - data_wordpress:/var/www/html
-      - data_phpmyadmin:/var/www/html
+      - data_phpmyadmin:/var/www/html/phpmyadmin
     restart: always
     networks:
       - inception-network
@@ -54,15 +54,17 @@ services:
     container_name: phpmyadmin
     environment:
       PMA_HOST: mariadb
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    ports:
-      - "8081:443"
     volumes:
       - data_phpmyadmin:/var/www/html
     depends_on:
       - mariadb
     networks:
       - inception-network
+    links:
+      - mariadb
 
 volumes:
   data_mariadb:
