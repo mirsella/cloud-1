@@ -8,4 +8,4 @@ to start:
 to update the code:  
 `ansible-playbook -v update.yml`  
 to uninstall:  
-`ansible-playbook -i hosts uninstall.yml`
+`ansible-playbook uninstall.yml`
