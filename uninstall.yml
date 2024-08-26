@@ -55,6 +55,7 @@
         state: absent
 
     - name: Delete data directory
+      become: true
       ansible.builtin.file:
         path: data
         state: absent
